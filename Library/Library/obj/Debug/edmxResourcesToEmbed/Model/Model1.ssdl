@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LIBRARYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BOOKS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BOOKNAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="BOOKTYPE" Type="nvarchar" MaxLength="255" />
+    <Property Name="AUTHOR" Type="nvarchar" MaxLength="255" />
+    <Property Name="BOOKCOUNT" Type="int" Nullable="false" />
+    <Property Name="DELETED" Type="bit" Nullable="false" />
+    <Property Name="PRICE" Type="float" Nullable="false" />
+    <Property Name="Punish" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CUSTNAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="CUSTSURNAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="MOBIL" Type="nvarchar" MaxLength="30" />
+    <Property Name="IDENTITYCARDNUMBER" Type="nvarchar" MaxLength="100" />
+    <Property Name="ADDRESS" Type="nvarchar" MaxLength="255" />
+    <Property Name="DELETED" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ORDERS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CUSTOMERORDERDATE" Type="date" />
+    <Property Name="DELIVARYORDERDATE" Type="date" />
+    <Property Name="CUSTOMERID" Type="int" />
+    <Property Name="BOOKSID" Type="int" />
+    <Property Name="USERSID" Type="int" />
+    <Property Name="DELEVERYBOOK" Type="bit" Nullable="false" />
+    <Property Name="BOOKCOUNT" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="SURNAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="EMAIL" Type="nvarchar" MaxLength="100" />
+    <Property Name="MOBILNUMBER" Type="int" />
+    <Property Name="PHONENUMBER" Type="int" />
+    <Property Name="ADMITT" Type="date" />
+    <Property Name="STATUS" Type="bit" Nullable="false" />
+    <Property Name="LEVEL" Type="bit" Nullable="false" />
+    <Property Name="DELETED" Type="bit" Nullable="false" />
+    <Property Name="PASSWORD" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK__ORDERS__BOOKSID__173876EA">
+    <End Role="BOOKS" Type="Self.BOOKS" Multiplicity="0..1" />
+    <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOKS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ORDERS">
+        <PropertyRef Name="BOOKSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ORDERS__CUSTOMER__164452B1">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+    <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ORDERS">
+        <PropertyRef Name="CUSTOMERID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ORDERS__USERSID__182C9B23">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ORDERS">
+        <PropertyRef Name="USERSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LIBRARYModelStoreContainer">
+    <EntitySet Name="BOOKS" EntityType="Self.BOOKS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__ORDERS__BOOKSID__173876EA" Association="Self.FK__ORDERS__BOOKSID__173876EA">
+      <End Role="BOOKS" EntitySet="BOOKS" />
+      <End Role="ORDERS" EntitySet="ORDERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ORDERS__CUSTOMER__164452B1" Association="Self.FK__ORDERS__CUSTOMER__164452B1">
+      <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+      <End Role="ORDERS" EntitySet="ORDERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ORDERS__USERSID__182C9B23" Association="Self.FK__ORDERS__USERSID__182C9B23">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="ORDERS" EntitySet="ORDERS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LIBRARYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BOOKS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BOOKNAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="BOOKTYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="AUTHOR" Type="nvarchar" MaxLength="255" />
+          <Property Name="BOOKCOUNT" Type="int" Nullable="false" />
+          <Property Name="DELETED" Type="bit" Nullable="false" />
+          <Property Name="PRICE" Type="float" Nullable="false" />
+          <Property Name="Punish" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CUSTNAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="CUSTSURNAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="MOBIL" Type="nvarchar" MaxLength="30" />
+          <Property Name="IDENTITYCARDNUMBER" Type="nvarchar" MaxLength="100" />
+          <Property Name="ADDRESS" Type="nvarchar" MaxLength="255" />
+          <Property Name="DELETED" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CUSTOMERORDERDATE" Type="date" />
+          <Property Name="DELIVARYORDERDATE" Type="date" />
+          <Property Name="CUSTOMERID" Type="int" />
+          <Property Name="BOOKSID" Type="int" />
+          <Property Name="USERSID" Type="int" />
+          <Property Name="DELEVERYBOOK" Type="bit" Nullable="false" />
+          <Property Name="BOOKCOUNT" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SURNAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="100" />
+          <Property Name="MOBILNUMBER" Type="int" />
+          <Property Name="PHONENUMBER" Type="int" />
+          <Property Name="ADMITT" Type="date" />
+          <Property Name="STATUS" Type="bit" Nullable="false" />
+          <Property Name="LEVEL" Type="bit" Nullable="false" />
+          <Property Name="DELETED" Type="bit" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__ORDERS__BOOKSID__173876EA">
+          <End Role="BOOKS" Type="Self.BOOKS" Multiplicity="0..1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOOKS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="BOOKSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__CUSTOMER__164452B1">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="CUSTOMERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__USERSID__182C9B23">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="USERSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LIBRARYModelStoreContainer">
+          <EntitySet Name="BOOKS" EntityType="Self.BOOKS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ORDERS__BOOKSID__173876EA" Association="Self.FK__ORDERS__BOOKSID__173876EA">
+            <End Role="BOOKS" EntitySet="BOOKS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__CUSTOMER__164452B1" Association="Self.FK__ORDERS__CUSTOMER__164452B1">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__USERSID__182C9B23" Association="Self.FK__ORDERS__USERSID__182C9B23">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LIBRARYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SURNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MOBILNUMBER" Type="Int32" />
+          <Property Name="PHONENUMBER" Type="Int32" />
+          <Property Name="ADMITT" Type="DateTime" Precision="0" />
+          <Property Name="STATUS" Type="Boolean" Nullable="false" />
+          <Property Name="LEVEL" Type="Boolean" Nullable="false" />
+          <Property Name="DELETED" Type="Boolean" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ORDERS" Relationship="LIBRARYModel.FK__ORDERS__USERSID__182C9B23" FromRole="USER" ToRole="ORDER" />
+        </EntityType>
+        <EntityContainer Name="LIBRARYEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <EntitySet Name="BOOKS" EntityType="LIBRARYModel.BOOK" />
+          <EntitySet Name="CUSTOMERs" EntityType="LIBRARYModel.CUSTOMER" />
+          <EntitySet Name="ORDERS" EntityType="LIBRARYModel.ORDER" />
+          <AssociationSet Name="FK__ORDERS__BOOKSID__173876EA" Association="LIBRARYModel.FK__ORDERS__BOOKSID__173876EA">
+            <End Role="BOOK" EntitySet="BOOKS" />
+            <End Role="ORDER" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__CUSTOMER__164452B1" Association="LIBRARYModel.FK__ORDERS__CUSTOMER__164452B1">
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+            <End Role="ORDER" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__USERSID__182C9B23" Association="LIBRARYModel.FK__ORDERS__USERSID__182C9B23">
+            <End Role="USER" EntitySet="USERS" />
+            <End Role="ORDER" EntitySet="ORDERS" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BOOK">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BOOKNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BOOKTYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AUTHOR" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BOOKCOUNT" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ORDERS" Relationship="LIBRARYModel.FK__ORDERS__BOOKSID__173876EA" FromRole="BOOK" ToRole="ORDER" />
+          <Property Name="DELETED" Type="Boolean" Nullable="false" />
+          <Property Name="PRICE" Type="Double" Nullable="false" />
+          <Property Name="Punish" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CUSTNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTSURNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MOBIL" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IDENTITYCARDNUMBER" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ORDERS" Relationship="LIBRARYModel.FK__ORDERS__CUSTOMER__164452B1" FromRole="CUSTOMER" ToRole="ORDER" />
+          <Property Name="DELETED" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CUSTOMERORDERDATE" Type="DateTime" Precision="0" />
+          <Property Name="DELIVARYORDERDATE" Type="DateTime" Precision="0" />
+          <Property Name="CUSTOMERID" Type="Int32" />
+          <Property Name="BOOKSID" Type="Int32" />
+          <Property Name="USERSID" Type="Int32" />
+          <NavigationProperty Name="BOOK" Relationship="LIBRARYModel.FK__ORDERS__BOOKSID__173876EA" FromRole="ORDER" ToRole="BOOK" />
+          <NavigationProperty Name="CUSTOMER" Relationship="LIBRARYModel.FK__ORDERS__CUSTOMER__164452B1" FromRole="ORDER" ToRole="CUSTOMER" />
+          <NavigationProperty Name="USER" Relationship="LIBRARYModel.FK__ORDERS__USERSID__182C9B23" FromRole="ORDER" ToRole="USER" />
+          <Property Name="DELEVERYBOOK" Type="Boolean" Nullable="false" />
+          <Property Name="BOOKCOUNT" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__ORDERS__BOOKSID__173876EA">
+          <End Type="LIBRARYModel.BOOK" Role="BOOK" Multiplicity="0..1" />
+          <End Type="LIBRARYModel.ORDER" Role="ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOOK">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="BOOKSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__CUSTOMER__164452B1">
+          <End Type="LIBRARYModel.CUSTOMER" Role="CUSTOMER" Multiplicity="0..1" />
+          <End Type="LIBRARYModel.ORDER" Role="ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="CUSTOMERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__USERSID__182C9B23">
+          <End Type="LIBRARYModel.USER" Role="USER" Multiplicity="0..1" />
+          <End Type="LIBRARYModel.ORDER" Role="ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="USERSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LIBRARYModelStoreContainer" CdmEntityContainer="LIBRARYEntities">
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="LIBRARYModel.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="SURNAME" ColumnName="SURNAME" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="MOBILNUMBER" ColumnName="MOBILNUMBER" />
+                <ScalarProperty Name="PHONENUMBER" ColumnName="PHONENUMBER" />
+                <ScalarProperty Name="ADMITT" ColumnName="ADMITT" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="LEVEL" ColumnName="LEVEL" />
+                <ScalarProperty Name="DELETED" ColumnName="DELETED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BOOKS">
+            <EntityTypeMapping TypeName="LIBRARYModel.BOOK">
+              <MappingFragment StoreEntitySet="BOOKS">
+                <ScalarProperty Name="Punish" ColumnName="Punish" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="DELETED" ColumnName="DELETED" />
+                <ScalarProperty Name="BOOKCOUNT" ColumnName="BOOKCOUNT" />
+                <ScalarProperty Name="AUTHOR" ColumnName="AUTHOR" />
+                <ScalarProperty Name="BOOKTYPE" ColumnName="BOOKTYPE" />
+                <ScalarProperty Name="BOOKNAME" ColumnName="BOOKNAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMERs">
+            <EntityTypeMapping TypeName="LIBRARYModel.CUSTOMER">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="DELETED" ColumnName="DELETED" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="IDENTITYCARDNUMBER" ColumnName="IDENTITYCARDNUMBER" />
+                <ScalarProperty Name="MOBIL" ColumnName="MOBIL" />
+                <ScalarProperty Name="CUSTSURNAME" ColumnName="CUSTSURNAME" />
+                <ScalarProperty Name="CUSTNAME" ColumnName="CUSTNAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERS">
+            <EntityTypeMapping TypeName="LIBRARYModel.ORDER">
+              <MappingFragment StoreEntitySet="ORDERS">
+                <ScalarProperty Name="BOOKCOUNT" ColumnName="BOOKCOUNT" />
+                <ScalarProperty Name="DELEVERYBOOK" ColumnName="DELEVERYBOOK" />
+                <ScalarProperty Name="USERSID" ColumnName="USERSID" />
+                <ScalarProperty Name="BOOKSID" ColumnName="BOOKSID" />
+                <ScalarProperty Name="CUSTOMERID" ColumnName="CUSTOMERID" />
+                <ScalarProperty Name="DELIVARYORDERDATE" ColumnName="DELIVARYORDERDATE" />
+                <ScalarProperty Name="CUSTOMERORDERDATE" ColumnName="CUSTOMERORDERDATE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

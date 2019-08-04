@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LIBRARYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SURNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MOBILNUMBER" Type="Int32" />
+    <Property Name="PHONENUMBER" Type="Int32" />
+    <Property Name="ADMITT" Type="DateTime" Precision="0" />
+    <Property Name="STATUS" Type="Boolean" Nullable="false" />
+    <Property Name="LEVEL" Type="Boolean" Nullable="false" />
+    <Property Name="DELETED" Type="Boolean" Nullable="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ORDERS" Relationship="LIBRARYModel.FK__ORDERS__USERSID__182C9B23" FromRole="USER" ToRole="ORDER" />
+  </EntityType>
+  <EntityContainer Name="LIBRARYEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="USERS" EntityType="Self.USER" />
+    <EntitySet Name="BOOKS" EntityType="LIBRARYModel.BOOK" />
+    <EntitySet Name="CUSTOMERs" EntityType="LIBRARYModel.CUSTOMER" />
+    <EntitySet Name="ORDERS" EntityType="LIBRARYModel.ORDER" />
+    <AssociationSet Name="FK__ORDERS__BOOKSID__173876EA" Association="LIBRARYModel.FK__ORDERS__BOOKSID__173876EA">
+      <End Role="BOOK" EntitySet="BOOKS" />
+      <End Role="ORDER" EntitySet="ORDERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ORDERS__CUSTOMER__164452B1" Association="LIBRARYModel.FK__ORDERS__CUSTOMER__164452B1">
+      <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+      <End Role="ORDER" EntitySet="ORDERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ORDERS__USERSID__182C9B23" Association="LIBRARYModel.FK__ORDERS__USERSID__182C9B23">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="ORDER" EntitySet="ORDERS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BOOK">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BOOKNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="BOOKTYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AUTHOR" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="BOOKCOUNT" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ORDERS" Relationship="LIBRARYModel.FK__ORDERS__BOOKSID__173876EA" FromRole="BOOK" ToRole="ORDER" />
+    <Property Name="DELETED" Type="Boolean" Nullable="false" />
+    <Property Name="PRICE" Type="Double" Nullable="false" />
+    <Property Name="Punish" Type="Double" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CUSTNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CUSTSURNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="MOBIL" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="IDENTITYCARDNUMBER" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ADDRESS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ORDERS" Relationship="LIBRARYModel.FK__ORDERS__CUSTOMER__164452B1" FromRole="CUSTOMER" ToRole="ORDER" />
+    <Property Name="DELETED" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ORDER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CUSTOMERORDERDATE" Type="DateTime" Precision="0" />
+    <Property Name="DELIVARYORDERDATE" Type="DateTime" Precision="0" />
+    <Property Name="CUSTOMERID" Type="Int32" />
+    <Property Name="BOOKSID" Type="Int32" />
+    <Property Name="USERSID" Type="Int32" />
+    <NavigationProperty Name="BOOK" Relationship="LIBRARYModel.FK__ORDERS__BOOKSID__173876EA" FromRole="ORDER" ToRole="BOOK" />
+    <NavigationProperty Name="CUSTOMER" Relationship="LIBRARYModel.FK__ORDERS__CUSTOMER__164452B1" FromRole="ORDER" ToRole="CUSTOMER" />
+    <NavigationProperty Name="USER" Relationship="LIBRARYModel.FK__ORDERS__USERSID__182C9B23" FromRole="ORDER" ToRole="USER" />
+    <Property Name="DELEVERYBOOK" Type="Boolean" Nullable="false" />
+    <Property Name="BOOKCOUNT" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__ORDERS__BOOKSID__173876EA">
+    <End Type="LIBRARYModel.BOOK" Role="BOOK" Multiplicity="0..1" />
+    <End Type="LIBRARYModel.ORDER" Role="ORDER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOK">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ORDER">
+        <PropertyRef Name="BOOKSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ORDERS__CUSTOMER__164452B1">
+    <End Type="LIBRARYModel.CUSTOMER" Role="CUSTOMER" Multiplicity="0..1" />
+    <End Type="LIBRARYModel.ORDER" Role="ORDER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ORDER">
+        <PropertyRef Name="CUSTOMERID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ORDERS__USERSID__182C9B23">
+    <End Type="LIBRARYModel.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="LIBRARYModel.ORDER" Role="ORDER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ORDER">
+        <PropertyRef Name="USERSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
